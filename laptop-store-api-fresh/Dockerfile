@@ -36,8 +36,9 @@ RUN mkdir -p storage/framework/cache \
     && chmod -R 775 storage bootstrap/cache
 
 RUN php artisan package:discover --ansi
+
 RUN php artisan config:clear
 
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
