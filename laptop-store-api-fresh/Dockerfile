@@ -18,17 +18,19 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock ./
+# Copy the Laravel application first
+COPY . .
 
+# Install PHP dependencies
 RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-source \
     --optimize-autoloader
 
-COPY . .
-
-RUN mkdir -p storage/framework/cache \
+# Create Laravel storage directories
+RUN mkdir -p \
+    storage/framework/cache \
     storage/framework/sessions \
     storage/framework/views \
     bootstrap/cache \
