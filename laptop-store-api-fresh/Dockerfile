@@ -23,7 +23,9 @@ COPY composer.json composer.lock ./
 RUN composer install \
     --no-dev \
     --no-interaction \
-    --optimize-autoloader
+    --prefer-dist \
+    --optimize-autoloader \
+    --no-progress
 
 COPY . .
 
