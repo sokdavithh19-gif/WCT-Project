@@ -13,16 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Registers the `role:admin` / `role:user` middleware alias used
-        // throughout routes/api.php.
+        // Registers the `role:admin` / `role:user` middleware alias
+        // used throughout routes/api.php.
         $middleware->alias([
             'role' => EnsureUserHasRole::class,
         ]);
 
-        // Sanctum stateful API middleware (only needed if you also plan
-        // to hit the API from a first-party SPA using cookies instead of
-        // bearer tokens; safe to leave in either way).
+        // Apply CORS and Sanctum middleware to API requests.
         $middleware->api(prepend: [
+            \Illuminate\Http\Middleware\HandleCors::class,
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
     })
